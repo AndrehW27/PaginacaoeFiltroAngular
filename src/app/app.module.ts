@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ConsultaCasseteComponent } from './consulta-cassete/consulta-cassete.component';
+import { ConsultaCasseteComponent } from './components/consulta-cassete/consulta-cassete.component';
 
 @NgModule({
   declarations: [

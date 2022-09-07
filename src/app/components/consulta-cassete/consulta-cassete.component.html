@@ -1,0 +1,68 @@
+<h2 class="consulta">Consulta Cassete</h2>
+
+<div class="card">
+  <h4 class="h4-cassete">cassete</h4>
+  <input id="input-busca" class="input" type="text" placeholder="Digite aqui para filtrar" [(ngModel)]="searchText" (keyup.enter)="Filtrar()">
+  <button class="filtrar" (click)="Filtrar()">filtrar</button>
+  <button class="vertodos" (click)="VerTodos()">ver todos</button>
+  <button class="vertodos" (click)="PagInicial()">página inicial</button>
+  <!-- <h4>cassete</h4>
+  <h4>cassete</h4> -->
+
+  <div class="date-picker">
+    <h4>data inicial: <input id="picker1" class="inputdata" type="date"></h4>
+    <h4 class="dataFinal">data final: <input id="picker2" class="segundoCalendario" type="date"></h4> 
+    <!-- <p> Data inicial: <input id="picker1" type="text"></p>
+    <p> Data final: <input id="picker2" type="text"></p>    -->
+    <button class="pesquisar" (click)="Pesquisar()">pesquisar</button>
+  </div>
+</div>
+<div class="resultadoBusca">
+  <h3>Resultado da busca:</h3>
+</div>
+
+<div *ngIf="alerta" class="alert">
+  <img class="atencao" src="../../assets/icons/warning.png" alt="atencão">
+  <div>Valor não encontrado, por favor busque novamente, ou acesse: </div>
+  <a class="a-verTodos" (click)="VerTodos()">Ver Todos</a> 
+  <img class="close" src="../../assets/icons/close.png" alt="proximo" (click)="CloseAlert()">
+</div>
+
+<table class="table">
+  <tr class="tr">
+    <th class="th">Cassete</th>
+    <th class="th">Data</th>
+    <th class="th">Tipo</th>
+    <th class="th">Status</th>
+  </tr>
+  <tbody id="tabela-cassetes">
+    <tr *ngFor="let item of tabelaCassetes">
+      <td class="td">{{item.casseteNome}}</td>
+      <td class="td">{{item.data}}</td>
+      <td class="td">{{item.tipo}}</td>
+      <td class="td">{{item.status}}</td>
+    </tr>
+  </tbody>
+
+</table>
+
+<div class="paginacao">
+  <p *ngIf="verTodos" class="itensppg">itens por pg</p>
+  <select *ngIf="verTodos" class="select span" (change)="itensPorPg($event)">
+    <option class="span" value="5">5</option>
+    <option class="span" value="10">10</option>
+    <option class="span" value="15">15</option>
+    <option class="span" value="20">20</option>
+  </select>
+  <p *ngIf="verTodos"  class="pipe">|</p>
+  <p> <span class="span">{{posInicialSlice+1}}</span> - <span class="span">{{posFinalSliceTela}}</span> de <span class="span">{{apiLength}}</span> itens </p>
+  <p *ngIf="verTodos"  class="pipe">|</p>  
+  <p *ngIf="verTodos" >página <span class="span">{{paginaAtual}}</span> de <span class="span">{{numeroPaginas}}</span></p>
+  <div class="divprev">
+    <img *ngIf="showPrevButton"  class="prev" src="../../assets/icons/back.png" alt="proximo" (click)="anterior()">
+  </div> 
+  <div class="divnext">
+    <img *ngIf="showNextButton"  class="next" src="../../assets/icons/next.png" alt="proximo" (click)="proxima()">
+  </div>  
+ 
+</div>
