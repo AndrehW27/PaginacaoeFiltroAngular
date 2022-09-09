@@ -140,13 +140,19 @@ export class ConsultaCasseteComponent implements OnInit {
   }
 
   //PESQUISAR
-  public inputData1 = '2021/06/05';
-  public inputData2 = '2021/06/10';
+  public inputData1 = '';
+  public inputData2 = '';
   public cassDentroIntervalo: Array<{casseteNome: string, data: string, tipo: string, status: string}> = [];
 
   public Pesquisar(){
    this.inputData1 = (document.getElementById('picker1') as HTMLInputElement).value;
    this.inputData2 = (document.getElementById('picker2') as HTMLInputElement).value;
+
+   const dateOne:any = new Date(this.inputData1);
+   const dateTwo:any = new Date(this.inputData2);
+    const time = Math.abs(dateTwo - dateOne);
+    const days = Math.ceil(time / (1000 * 60 * 60 * 24))
+    console.log(days);    
 
    if (this.inputData1 === '' || this.inputData2 === '') {
     this.conteudoAlerta = 'Datas não preenchidas, por favor preencha as datas ou acesse: '
@@ -157,6 +163,13 @@ export class ConsultaCasseteComponent implements OnInit {
     }, 7000);
   } else if (this.inputData1 >= this.inputData2) {
     this.conteudoAlerta = 'Data inicial maior que a final, preencha as datas corretamente ou acesse: '
+    this.alerta = true
+    this.tabelaCassetes = this.cassDentroIntervalo;
+    setTimeout(() => {
+      this.alerta =false        
+    }, 7000);
+  } else if (days > 90) {
+    this.conteudoAlerta = 'Período maior que 3 meses, procure em um intervalo menor ou acesse: '
     this.alerta = true
     this.tabelaCassetes = this.cassDentroIntervalo;
     setTimeout(() => {
