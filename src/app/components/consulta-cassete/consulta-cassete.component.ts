@@ -32,6 +32,7 @@ export class ConsultaCasseteComponent implements OnInit {
   public showPrevButton = false;
   public showNextButton = true;
   public verTodos = true;
+  public verPaginacao = true;  
   // public verPaginacaoFiltrar = true;
   public paginaAtual = 1;
   public apiLength = this.dadosAPI.length;
@@ -113,6 +114,7 @@ export class ConsultaCasseteComponent implements OnInit {
 
   //PagInicial
   public PagInicial(){
+    this.verPaginacao = true;
     this.verTodos = true;
     this.showNextButton = true;
     this.paginaAtual = 1;
@@ -149,12 +151,14 @@ export class ConsultaCasseteComponent implements OnInit {
    if (this.inputData1 === '' || this.inputData2 === '') {
     this.conteudoAlerta = 'Datas não preenchidas, por favor preencha as datas ou acesse: '
     this.alerta = true
+    this.tabelaCassetes = this.cassDentroIntervalo;
     setTimeout(() => {
       this.alerta =false        
     }, 7000);
   } else if (this.inputData1 >= this.inputData2) {
     this.conteudoAlerta = 'Data inicial maior que a final, preencha as datas corretamente ou acesse: '
     this.alerta = true
+    this.tabelaCassetes = this.cassDentroIntervalo;
     setTimeout(() => {
       this.alerta =false        
     }, 7000);
@@ -166,6 +170,8 @@ export class ConsultaCasseteComponent implements OnInit {
       console.log(this.cassDentroIntervalo); 
 
       this.tabelaCassetes = this.cassDentroIntervalo;
+
+      this.verPaginacao = false
   }
     // this.cassDentroIntervalo.forEach(cassete => {
     //   cassete.data = this.FormatarData(cassete.data);

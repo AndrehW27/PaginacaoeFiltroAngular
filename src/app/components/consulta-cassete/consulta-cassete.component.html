@@ -47,7 +47,7 @@
 
 </table>
 
-<div class="paginacao">
+<div *ngIf="verPaginacao" class="paginacao">
   <p *ngIf="verTodos" class="itensppg">itens por página</p>
   <select *ngIf="verTodos" class="select span" (change)="itensPorPg($event)">
     <option class="span" value="5">5</option>
