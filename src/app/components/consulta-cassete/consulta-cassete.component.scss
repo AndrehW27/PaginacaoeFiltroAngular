@@ -142,8 +142,6 @@
   border: 1px solid black;
 }
 
-
-
 .span{
   color: rgb(25, 152, 255) !important;
   font-weight: bold;
@@ -167,6 +165,7 @@
 .select {
   border: none;
   padding: 3px 2px;
+  font-size: 16px ;
   // margin: 0 24px 0 4px;
   //   color: rgb(0, 60, 255);
 }
@@ -204,9 +203,9 @@
   }
 
   .itensppg{
-    margin: 0;
+    margin: 0 8px 0 0;
   }
-  .prev{
+    .prev{
     width: 15px;
     cursor: pointer;
     transition: 200ms;    
@@ -218,6 +217,15 @@
   }
   .next:hover{
     opacity: 0.5;
+  }
+  .depaginacao{
+    margin:0 8px;
+  }
+  .itenspaginacao{
+    margin: 0 0 0 8px;    
+  }
+  .paginapaginacao{
+    margin: 0 8px 0 0;        
   }
 
 

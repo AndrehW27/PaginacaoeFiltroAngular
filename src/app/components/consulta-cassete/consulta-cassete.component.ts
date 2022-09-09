@@ -11,22 +11,23 @@ export class ConsultaCasseteComponent implements OnInit {
 
   public cassetes: Cassete[] = [];
 
-public dadosAPI:  Array<{casseteNome: string, data: string, tipo: string, status: string}> =  [
-    { casseteNome: 'Cassete 1', data:'01/01/2020', tipo: 'Tipo TCX', status: 'Operante' },
-    { casseteNome: 'Cassete 2', data:'02/01/2020', tipo: 'Tipo APX', status: 'Desativado' },
-    { casseteNome: 'Cassete 3', data:'03/01/2020', tipo: 'Tipo TCX', status: 'Operante' },
-    { casseteNome: 'Cassete 4', data:'01/02/2021', tipo: 'Tipo XPTO', status: 'Desativado' },
-    { casseteNome: 'Cassete 5', data:'02/02/2021', tipo: 'Tipo TCX', status: 'Operante' },
-    { casseteNome: 'Pg2 Cassete 1', data:'03/02/2021', tipo: 'Tipo TCX', status: 'Operante' },
-    { casseteNome: 'Pg2 Cassete 2', data:'01/03/2022', tipo: 'Tipo APX', status: 'Desativado' },
-    { casseteNome: 'Pg2 Cassete 3', data:'02/03/2022', tipo: 'Tipo TCX', status: 'Operante' },
-    { casseteNome: 'Pg2 Cassete 4', data:'03/03/2022', tipo: 'Tipo XPTO', status: 'Desativado' },
-    { casseteNome: 'Pg2 Cassete 5', data:'01/12/2022', tipo: 'Tipo TCX', status: 'Operante' },
-    { casseteNome: 'Pg3 Cassete 1', data:'02/12/2022', tipo: 'Tipo TCX', status: 'Operante' },
-    { casseteNome: 'Pg3 Cassete 2', data:'03/12/2022', tipo: 'Tipo APX', status: 'Desativado' },
+  public dadosAPI:  Array<{casseteNome: string, data: string, tipo: string, status: string}> =  [
+    { casseteNome: 'Cassete 1', data:'2020-01-01', tipo: 'Tipo TCX', status: 'Operante' },
+    { casseteNome: 'Cassete 2', data:'2020-01-02', tipo: 'Tipo APX', status: 'Desativado' },
+    { casseteNome: 'Cassete 3', data:'2020-01-03', tipo: 'Tipo TCX', status: 'Operante' },
+    { casseteNome: 'Cassete 4', data:'2021-02-01', tipo: 'Tipo XPTO', status: 'Desativado' },
+    { casseteNome: 'Cassete 5', data:'2021-02-02', tipo: 'Tipo TCX', status: 'Operante' },
+    { casseteNome: 'Pg2 Cassete 1', data:'2021-02-03', tipo: 'Tipo TCX', status: 'Operante' },
+    { casseteNome: 'Pg2 Cassete 2', data:'2022-03-02', tipo: 'Tipo APX', status: 'Desativado' },
+    { casseteNome: 'Pg2 Cassete 3', data:'2022-03-02', tipo: 'Tipo TCX', status: 'Operante' },
+    { casseteNome: 'Pg2 Cassete 4', data:'2022-03-03', tipo: 'Tipo XPTO', status: 'Desativado' },
+    { casseteNome: 'Pg2 Cassete 5', data:'2022-12-01', tipo: 'Tipo TCX', status: 'Operante' },
+    { casseteNome: 'Pg3 Cassete 1', data:'2022-12-02', tipo: 'Tipo TCX', status: 'Operante' },
+    { casseteNome: 'Pg3 Cassete 2', data:'2022-12-03', tipo: 'Tipo APX', status: 'Desativado' },
   ]
 
   //VARIAVEIS PARA PAGINACAO
+  public conteudoAlerta = '';
   public alerta = false;
   public showPrevButton = false;
   public showNextButton = true;
@@ -62,27 +63,40 @@ public dadosAPI:  Array<{casseteNome: string, data: string, tipo: string, status
   public cassFiltrados: Array<{casseteNome: string, data: string, tipo: string, status: string}> = []
 
   public Filtrar() { 
-    this.verTodos = false;
-    console.log(this.verTodos);
-    
+    this.verTodos = false;     
     this.showPrevButton = false;      
     this.showNextButton = false;  
     this.searchText.toLowerCase;
     this.VirarMinusculo();
-    this.cassFiltrados = this.dadosAPI.filter(cassete => 
-      cassete.casseteNome.includes(this.searchText) ||
-      cassete.data.includes(this.searchText) ||
-      cassete.tipo.includes(this.searchText) ||
-      cassete.status.includes(this.searchText) 
-      );
-    this.tabelaCassetes = this.cassFiltrados;
-    this.posFinalSliceTela = this.tabelaCassetes.length;
+
 
     if (this.searchText === '') {
-      this.alerta =true
+      this.conteudoAlerta = 'Campo vazio, por favor busque novamente, ou acesse: '
+      this.alerta = true
+      this.tabelaCassetes = this.cassFiltrados;
       setTimeout(() => {
         this.alerta =false        
-      }, 5000);
+      }, 7000);
+    } 
+    else{
+      this.cassFiltrados = this.dadosAPI.filter(cassete => 
+        cassete.casseteNome.includes(this.searchText) ||
+        cassete.data.includes(this.searchText) ||
+        cassete.tipo.includes(this.searchText) ||
+        cassete.status.includes(this.searchText) 
+        );
+        this.tabelaCassetes = this.cassFiltrados;
+        this.posFinalSliceTela = this.tabelaCassetes.length;
+        console.log(this.cassFiltrados);
+        
+      if(typeof this.tabelaCassetes !== "undefined" && this.tabelaCassetes.length == 0){
+      this.conteudoAlerta = 'Valor não encontrado, por favor busque novamente, ou acesse: '
+      this.alerta = true
+      setTimeout(() => {
+        this.alerta =false        
+      }, 7000);
+    }
+
     }
   }
 
@@ -111,23 +125,51 @@ public dadosAPI:  Array<{casseteNome: string, data: string, tipo: string, status
     this.tabelaCassetes = this.dadosAPI.slice(this.posInicialSlice, this.posFinalSlice)
   }
 
+
+  //FORMATAR DATA
+  public FormatarData(data:string){
+
+    const dia = data.split("/")[0];
+    const mes = data.split("/")[1];
+    const ano = data.split("/")[2];
+
+    return ano + '-' + ("0"+mes).slice(-2) + '-' +("0"+dia).slice(-2);
+
+  }
+
   //PESQUISAR
-  public valorInput1 = '';
-  public valorInput2 = '';
+  public inputData1 = '2021/06/05';
+  public inputData2 = '2021/06/10';
+  public cassDentroIntervalo: Array<{casseteNome: string, data: string, tipo: string, status: string}> = [];
 
   public Pesquisar(){
-    this.valorInput1 = (document.getElementById('picker1')as HTMLInputElement).value;
-    console.log(this.valorInput1);
-    this.valorInput2 = (document.getElementById('picker2')as HTMLInputElement).value;
-    console.log(this.valorInput2);  
-    //Mostrar ou não botoes prev e next
-    if (this.paginaAtual === 1) {
-      this.showPrevButton = false;      
-      this.showNextButton = true;      
-    } else if(this.paginaAtual === this.numeroPaginas){
-      this.showNextButton = false;      
-      this.showPrevButton = true; 
-    }  
+   this.inputData1 = (document.getElementById('picker1') as HTMLInputElement).value;
+   this.inputData2 = (document.getElementById('picker2') as HTMLInputElement).value;
+
+   if (this.inputData1 === '' || this.inputData2 === '') {
+    this.conteudoAlerta = 'Datas não preenchidas, por favor preencha as datas ou acesse: '
+    this.alerta = true
+    setTimeout(() => {
+      this.alerta =false        
+    }, 7000);
+  } else if (this.inputData1 >= this.inputData2) {
+    this.conteudoAlerta = 'Data inicial maior que a final, preencha as datas corretamente ou acesse: '
+    this.alerta = true
+    setTimeout(() => {
+      this.alerta =false        
+    }, 7000);
+  } else {
+
+      this.cassDentroIntervalo = this.dadosAPI.filter(cassete => 
+      cassete.data >= this.inputData1 && cassete.data <= this.inputData2 
+      )
+      console.log(this.cassDentroIntervalo); 
+
+      this.tabelaCassetes = this.cassDentroIntervalo;
+  }
+    // this.cassDentroIntervalo.forEach(cassete => {
+    //   cassete.data = this.FormatarData(cassete.data);
+    // })    
   }
 
   //FUNCAO ANTERIOR

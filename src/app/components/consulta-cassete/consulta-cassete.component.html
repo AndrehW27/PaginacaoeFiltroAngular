@@ -23,7 +23,8 @@
 
 <div *ngIf="alerta" class="alert">
   <img class="atencao" src="../../assets/icons/warning.png" alt="atencão">
-  <div>Valor não encontrado, por favor busque novamente, ou acesse: </div>
+  <!-- <div>Valor não encontrado, por favor busque novamente, ou acesse: </div> -->
+  <div>{{conteudoAlerta}}</div>
   <a class="a-verTodos" (click)="VerTodos()">Ver Todos</a> 
   <img class="close" src="../../assets/icons/close.png" alt="proximo" (click)="CloseAlert()">
 </div>
@@ -47,7 +48,7 @@
 </table>
 
 <div class="paginacao">
-  <p *ngIf="verTodos" class="itensppg">itens por pg</p>
+  <p *ngIf="verTodos" class="itensppg">itens por página</p>
   <select *ngIf="verTodos" class="select span" (change)="itensPorPg($event)">
     <option class="span" value="5">5</option>
     <option class="span" value="10">10</option>
@@ -55,9 +56,11 @@
     <option class="span" value="20">20</option>
   </select>
   <p *ngIf="verTodos"  class="pipe">|</p>
-  <p> <span class="span">{{posInicialSlice+1}}</span> - <span class="span">{{posFinalSliceTela}}</span> de <span class="span">{{apiLength}}</span> itens </p>
+  <p> <span class="span">{{posInicialSlice+1}}</span> - <span class="span">{{posFinalSliceTela}}</span> 
+    <span class="depaginacao">de</span> <span class="span">{{apiLength}}</span> <span class="itenspaginacao">itens</span>   </p>
   <p *ngIf="verTodos"  class="pipe">|</p>  
-  <p *ngIf="verTodos" >página <span class="span">{{paginaAtual}}</span> de <span class="span">{{numeroPaginas}}</span></p>
+  <p *ngIf="verTodos"> <span class="paginapaginacao">página</span>   <span class="span">{{paginaAtual}}</span> <span class="depaginacao">de</span>  
+    <span class="span">{{numeroPaginas}}</span></p>
   <div class="divprev">
     <img *ngIf="showPrevButton"  class="prev" src="../../assets/icons/back.png" alt="proximo" (click)="anterior()">
   </div> 
